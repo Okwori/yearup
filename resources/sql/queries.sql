@@ -62,20 +62,20 @@ WHERE id = :id;
 SELECT *
 FROM question
 WHERE id = :id
-  AND quiz_id = :quiz - id;
+  AND quiz_id = :quiz-id;
 
 -- :name get-questions :? :*
 -- :doc retrieves all questions
 SELECT *
 FROM question
-WHERE quiz_id = :quiz - id;
+WHERE quiz_id = :quiz-id;
 
 -- :name delete-question! :! :n
 -- :doc deletes a question record given the id
 DELETE
 FROM question
 WHERE id = :id
-  AND quiz_id = :quiz - id;
+  AND quiz_id = :quiz-id;
 
 
 -- :name create-setting! :! :n
@@ -145,7 +145,7 @@ ORDER BY id;
 -- :doc retrieves all option records order by question id
 SELECT o.id, o.name
 FROM option o
-WHERE question_id = :question - id;
+WHERE question_id = :question-id;
 
 -- :name delete-option! :! :n
 -- :doc deletes a option record given the id
@@ -158,12 +158,12 @@ WHERE id = :id;
 -- :doc creates a new answer record
 INSERT INTO answer
     (option_id, user_id)
-VALUES (:option - id, :user - id);
+VALUES (:option-id, :user-id);
 
 -- :name update-answer! :! :n
 -- :doc updates an existing answer record
 UPDATE answer
-SET option_id = :option - id
+SET option_id = :option-id
 WHERE id = :id;
 
 -- :name get-answer :? :1
