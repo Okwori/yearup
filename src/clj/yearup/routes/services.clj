@@ -49,7 +49,7 @@
              {:url    "/api/v1/swagger.json"
               :config {:validator-url nil}})}]]
 
-   ["/graphql" {:post {:response {200 {:body any?}} :handler (fn [req] (ok (graphql/execute-request (-> req :body slurp))))}}]
+   ["/graphql" {:post (fn [req] (ok (graphql/execute-request (-> req :body slurp))))}]
 
    ["/questions"
     {:post {:summary    "returns the questions belonging to a quiz"
