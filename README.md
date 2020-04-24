@@ -4,9 +4,9 @@ Quiz application for YearUp Direct Service Program
 
 ## Prerequisites
 
-[Java][2] 11+
+[Java 11+][2] 
 
-[Leiningen][1] 2+ 
+[Leiningen 2+ ][1] 
 
 
 
