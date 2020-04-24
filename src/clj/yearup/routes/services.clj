@@ -38,8 +38,8 @@
 
    ;; swagger documentation
    ["" {:no-doc  true
-        :swagger {:info {:title       "yearup-api"
-                         :description "https://cljdoc.org/d/metosin/reitit"}}}
+        :swagger {:info {:title       "YearUp API"
+                         :description "https://docs.google.com/document/d/1N05yZhl6mOhh6zyFliscv8pniz0gB5vv4oii3jj-p0s/edit?usp=sharing"}}}
 
     ["/swagger.json"
      {:get (swagger/create-swagger-handler)}]
@@ -60,7 +60,7 @@
                            :body   (db/get-questions quizId)})}}]
 
    ["/submit"
-    {:post {:summary    "accepts quiz, user and a collection options selected"
+    {:post {:summary    "accepts a user and a collection options selected, returns message based on options"
             :parameters {:body {:userId int? :selections (vector? int?)}}
             :responses  {200 {:body map?}}
             :handler    (fn [{{{:keys [userId selections]} :body} :parameters}]
@@ -93,7 +93,7 @@
 
    ["/quizzes"
     {:post {:summary    "returns the quizzes specified in the system"
-            :parameters {:body nil}
+            :parameters nil
             :responses  {200 {:body {:data vector?}}}
             :handler    (fn [{{{:keys []} :body} :parameters}]
                           {:status 200
