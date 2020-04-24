@@ -51,13 +51,22 @@
 
    ["/graphql" {:post (fn [req] (ok (graphql/execute-request (-> req :body slurp))))}]
 
-   ["/questions"
-    {:post {:summary    "returns the questions belonging to a quiz"
-            :parameters {:body {:quizId int?}}
-            :responses  {200 {:body map?}}
-            :handler    (fn [{{{:keys [quizId]} :body} :parameters}]
-                          {:status 200
-                           :body   (db/get-questions quizId)})}}]
+   ["/question"
+    [""
+     {:post {:summary    "return a question and its options"
+             :parameters {:body {:quizId int? :questionId int?}}
+             :responses  {200 {:body map?}}
+             :handler    (fn [{{{:keys [quizId questionId]} :body} :parameters}]
+                           {:status 200
+                            :body   {:data {:question (db/get-question quizId questionId)}}})}}]
+
+    ["/list"
+     {:post {:summary    "returns the questions belonging to a quiz"
+             :parameters {:body {:quizId int?}}
+             :responses  {200 {:body map?}}
+             :handler    (fn [{{{:keys [quizId]} :body} :parameters}]
+                           {:status 200
+                            :body   (db/get-questions quizId)})}}] ]
 
    ["/submit"
     {:post {:summary    "accepts a user and a collection options selected, returns message based on options"
@@ -66,14 +75,6 @@
             :handler    (fn [{{{:keys [userId selections]} :body} :parameters}]
                           {:status 200
                            :body   (db/submit-answers userId selections)})}}]
-
-   ["/question"
-    {:post {:summary    "return a question and its options"
-            :parameters {:body {:quizId int? :questionId int?}}
-            :responses  {200 {:body map?}}
-            :handler    (fn [{{{:keys [quizId questionId]} :body} :parameters}]
-                          {:status 200
-                           :body   {:data {:question (db/get-question quizId questionId)}}})}}]
 
    ["/options"
     {:post {:summary    "returns the options for a particular question"
@@ -84,20 +85,21 @@
                            :body   (db/get-options-question questionId)})}}]
 
    ["/quiz"
-    {:post {:summary    "returns the quiz specified by id in the system"
-            :parameters {:body {:id int?}}
-            :responses  {200 {:body map?}}
-            :handler    (fn [{{{:keys [id]} :body} :parameters}]
-                          {:status 200
-                           :body   {:data (db/get-quiz id)}})}}]
+    [""
+     {:post {:summary    "returns the quiz specified by id in the system"
+             :parameters {:body {:id int?}}
+             :responses  {200 {:body map?}}
+             :handler    (fn [{{{:keys [id]} :body} :parameters}]
+                           {:status 200
+                            :body   {:data (db/get-quiz id)}})}}]
 
-   ["/quizzes"
-    {:post {:summary    "returns the quizzes specified in the system"
-            :parameters nil
-            :responses  {200 {:body {:data vector?}}}
-            :handler    (fn [{{{:keys []} :body} :parameters}]
-                          {:status 200
-                           :body   {:data (db/get-quiz)}})}}]
+    ["/list"
+     {:get {:summary    "returns the quizzes specified in the system"
+             :parameters nil
+             :responses  {200 {:body {:data vector?}}}
+             :handler    (fn [{{{:keys []} :body} :parameters}]
+                           {:status 200
+                            :body   {:data (db/get-quiz)}})}}]]
 
    ["/user"
     {:get  {:summary    "returns the user with the specified email"
