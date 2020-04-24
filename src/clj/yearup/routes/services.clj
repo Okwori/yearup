@@ -46,7 +46,7 @@
 
     ["/api-docs/*"
      {:get (swagger-ui/create-swagger-ui-handler
-             {:url    "/api/swagger.json"
+             {:url    "/api/v1/swagger.json"
               :config {:validator-url nil}})}]]
 
    ["/graphql" {:post (fn [req] (ok (graphql/execute-request (-> req :body slurp))))}]
