@@ -23,7 +23,7 @@
   (r/with-let [expanded? (r/atom false)]
               [:nav.navbar.is-info>div.container
                [:div.navbar-brand
-                [:a.navbar-item {:href "/" :style {:font-weight :bold}} "yearup"]
+                [:a.navbar-item {:href "/" :style {:font-weight :bold}} "YearUp"]
                 [:span.navbar-burger.burger
                  {:data-target :nav-menu
                   :on-click    #(swap! expanded? not)
