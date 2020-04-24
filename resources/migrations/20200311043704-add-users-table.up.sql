@@ -9,6 +9,5 @@ create table users
     pass       varchar
 );
 
-alter table users
-    owner to postgres;
+-- alter table users owner to postgres;
 
