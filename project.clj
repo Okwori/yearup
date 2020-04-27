@@ -93,11 +93,13 @@
                                     [prone "2019-07-08"]
                                     [re-frisk "0.5.4.1"]
                                     [ring/ring-devel "1.8.0"]
-                                    [ring/ring-mock "0.4.0"]]
+                                    [ring/ring-mock "0.4.0"]
+                                    [midje "1.9.9"]]
                    :plugins        [[com.jakemccrary/lein-test-refresh "0.24.1"]
                                     [jonase/eastwood "0.3.5"]
                                     [lein-doo "0.1.11"]
-                                    [lein-figwheel "0.5.19"]]
+                                    [lein-figwheel "0.5.19"]
+                                    [lein-midje "3.2.2"]]
                    :cljsbuild      {:builds
                                     {:app
                                      {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
