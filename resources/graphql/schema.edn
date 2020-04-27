@@ -1,25 +1,58 @@
 {:enums
- {:episode
-  {:description "The episodes of the original Star Wars trilogy."
-   :values      [:NEWHOPE :EMPIRE :JEDI]}}
+ {:status
+  {:description "The status flag of a quiz"
+   :values      [:ACTIVE :INACTIVE]}}
 
  :objects
- {:droid
-  {:fields {:primary_functions {:type (list String)}
-            :id                {:type Int}
-            :name              {:type String}
-            :appears_in        {:type (list :episode)}}}
+ {:user
+  {:fields   {:first_name {:type String}
+              :last_name  {:type String}
+              :email      {:type String}}}
 
-  :human
+  :option
+  {:fields {:id        {:type Int}
+            :name      {:type String}
+            :question  {:type :question}
+            :sentiment {:type Int}}}
+  :quiz
   {:fields {:id          {:type Int}
-            :name        {:type String}
-            :home_planet {:type String}
-            :appears_in  {:type (list :episode)}}}}
+            :description {:type String}
+            :status      {:type Int}}}
+  :question
+  {:fields {:id       {:type Int}
+            :question {:type String}
+            :sub_note {:type String}
+            :quiz     {:type :quiz}}}
+  :answer
+  {:fields {:id     {:type Int}
+            :user   {:type :user}
+            :option {:type :option}}}
+  :city
+  {:fields {:id   {:type Int}
+            :name {:type String}}}
+  :setting
+  {:fields {:name  {:type String}
+            :value {:type String}}}}
 
+ ;; TODO Improve object and queries Schema!!
  :queries
- {:hero  {:type    (non-null :human)
-          :args    {:id {:type String :default-value "2001"}}
-          :resolve :get-hero}
-  :droid {:type    :droid
-          :args    {:name {:type String}}
-          :resolve :get-droid}}}
+ {:user         {:type    :user
+                 :args    {:id    {:type Int}
+                           :email {:type String}}
+                 :resolve :get-user}
+
+  :getQuiz      {:type    :quiz
+                 :args    {:id  {:type Int}}
+                 :resolve :get-quiz}
+
+  :getQuizzes   {:type    (list :quiz)
+                 :resolve :get-quizzes}
+
+  :getQuestions {:type    (list :question)
+                 :args    {:quizId {:type Int}}
+                 :resolve :get-questions}
+
+  :getQuestion  {:type    :question
+                 :args    {:quizId     {:type Int}
+                           :questionId {:type Int}}
+                 :resolve :get-question}}}
