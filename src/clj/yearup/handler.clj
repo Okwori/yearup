@@ -24,7 +24,7 @@
                   (ring/routes
                     (swagger-ui/create-swagger-ui-handler
                       {:path   "/swagger-ui"
-                       :url    "/api/swagger.json"
+                       :url    "/api/v1/swagger.json"
                        :config {:validator-url nil}})
                     (ring/create-resource-handler
                       {:path "/"})
