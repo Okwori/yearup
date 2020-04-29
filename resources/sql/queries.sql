@@ -68,7 +68,8 @@ WHERE id = :id
 -- :doc retrieves all questions
 SELECT *
 FROM question
-WHERE quiz_id = :quiz-id;
+WHERE quiz_id = :quiz-id
+ORDER BY slide_order;
 
 -- :name delete-question! :! :n
 -- :doc deletes a question record given the id
