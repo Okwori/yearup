@@ -207,7 +207,7 @@ WHERE id = :id;
 -- :doc retrieves all city records ordered by name
 SELECT *
 FROM city
-ORDER BY name;
+ORDER BY id;
 
 -- :name delete-city! :! :n
 -- :doc deletes a city record given the id
