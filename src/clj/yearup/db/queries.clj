@@ -2,6 +2,18 @@
   (:require
     [yearup.db.core :as db]))
 
+(defn get-city
+  "Get a city with address specified"
+  [id]
+  (let [city-query (db/get-city {:id id})
+        address-query (into [] (db/get-address-by-city-id {:city-id (:id city-query)})) ]
+    {:id (:id city-query) :name (:name city-query) :addresses address-query}))
+
+(defn get-cities
+  "Gets the vector of the cities defined for YearUp"
+  []
+  (into [] (db/get-cities)))
+
 (defn get-options-question
   "Gets the options for a question"
   [question-id]
@@ -13,16 +25,20 @@
   [quiz-id id]
   (let [q (db/get-question {:quiz-id quiz-id :id id})
         q2 (db/get-option-by-question-id {:question-id id})]
-    {:id id :detail (:question q) :options (into [] q2)}))
+    {:id id :detail (:question q) :subNote (:sub_note q) :backgroundImage (:background_image q)
+         :order (:slide_order q) :options (into [] q2)}))
 
 (defn get-questions
   "Returns a list of questions for a quiz with the specified Id"
   [quiz-id]
   (let [q (db/get-quiz {:id quiz-id})
         q2 (db/get-questions {:quiz-id quiz-id})
-        q3 (flatten (map #(vals (select-keys % [:id])) q2))]
+        q3 (flatten (map #(vals (select-keys % [:id])) q2))
+        q4 (flatten (map #(vals (select-keys % [:id])) (get-cities)))
+        q5 (into [] (map #(get-city %) q4))]
     {:data {:quizId      (:id q)
             :description (:desc q)
+            :cities       q5
             :questions   (into [] (map #(get-question quiz-id %) q3))}}))
 
 (defn submit-answers
@@ -68,11 +84,6 @@
   "Gets the Video URL"
   []
   (db/get-setting {:name "VIDEO"}))
-
-(defn get-cities
-  "Gets the vector of the cities defined for YearUp"
-  []
-  (into [] (db/get-cities)))
 
 (defn get-setting
   "Gets the value for a setting enum defined like Video URL"

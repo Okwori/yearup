@@ -1,0 +1,302 @@
+/* Phones landscape */
+
+@media only screen 
+and (min-device-width: 375px) 
+and (max-device-width: 667px) 
+and (orientation: landscape) { 
+ .inside-div{
+    padding-top: 10%
+ }
+
+ .lg-text {
+    font-size: 3.75vw;
+ }
+
+ .sm-text {
+   font-size: 2.5vw;
+}
+
+.one-btn {
+   height: 20%;
+   font-size: 4vw;
+}
+
+.btn-container{
+   bottom: 5%;
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+}
+
+.btn-center {
+   width: 25vw;
+   height: 15vw;
+   font-size: 2.5vw;
+}
+
+ .btn-container-dropdown {
+    height: 30%;
+ }
+ 
+ .btn-dropdown-size {
+    height: 40;
+    font-size: 3vw;
+    padding-top: 0.5%
+ }
+ 
+ .dropdown-menu {
+    font-size: 2.5vw;
+ }
+
+.email-input {
+   padding: 3%;
+   font-size: 2.5vw;
+   margin-bottom: 1.5%;
+}
+
+.btn-email {
+   padding: 2%;
+   font-size: 2vw;
+}
+
+}
+
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 823px) 
+  and (orientation: landscape) { 
+
+   .inside-div{
+    padding-top: 10%
+ }
+
+ .lg-text {
+    font-size: 4vw;
+ }
+
+ .sm-text {
+   font-size: 2.5vw;
+}
+
+.logo {
+   height: 8%;
+   margin: 2%;
+}
+
+.one-btn {
+   height: 20%;
+   font-size: 3.5vw;
+}
+
+.btn-container{
+   bottom: 5%;
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+}
+
+.btn-center {
+   width: 15vw;
+   height: 12vw;
+   font-size: 2vw;
+}
+
+ .btn-container-dropdown {
+    height: 30%;
+ }
+ 
+ .btn-dropdown-size {
+    height: 40;
+    font-size: 3vw;
+    padding-top: 0.5%
+ }
+ 
+ .dropdown-menu {
+    font-size: 2.5vw;
+ }
+
+.inside-div form {
+   margin-top: -3%;
+}
+.email-input {
+   padding: 2.5%;
+   font-size: 2vw;
+   margin-bottom: 1.5%;
+   margin-top: -4vw;
+}
+
+.btn-email {
+   padding: 1%;
+   font-size: 2vw;
+}
+
+.invalid-feedback {
+   font-size: 2vw;
+}
+
+.link {
+   position: absolute;
+   bottom: 3%;
+   margin-top: 2%;
+   margin-left: 25%;
+   font-size: 2vw;
+}
+}
+
+/*iPad Portrait  */
+
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px)
+  and (orientation: portrait) {
+   .lg-text {
+      font-size: 3.5vw;
+   }
+
+   .sm-text {
+      font-size: 2.5vw;
+   }
+
+   .btn-container{
+      height: 28%;
+      bottom: 10%;
+      grid-gap: 0.7vw;
+   }
+   
+   .btn-center {
+      margin: 0 0.9vw;
+      width: 20vw;
+      height: 16vw;
+      font-size: 2.8vw;
+   }
+
+   .one-btn {
+      height: 20%;
+      font-size: 4vw;
+   }
+   
+   .email-input {
+      padding: 4%;
+      font-size: 2.5vw;
+      margin-bottom: 2%;
+   }
+   
+   .btn-email {
+      padding: 2.5%;
+      font-size: 3vw;
+   }
+
+   .link {
+      position: absolute;
+      bottom: 3%;
+      margin-top: 2%;
+      margin-left: 25%;
+      font-size: 2vw;
+   }
+  }
+
+
+/*iPad Pro Portrait  */
+
+@media only screen 
+and (min-device-width: 1024px) 
+and (max-device-width: 1366px) {
+   .lg-text {
+      font-size: 4.25vw;
+   }
+
+   .sm-text {
+      font-size: 2vw;
+   }
+
+   .inside-div{
+      padding-top: 40%
+   }
+
+   .one-btn {
+      height: 20%;
+      font-size: 4vw;
+   }
+
+   .btn-container-dropdown {
+    bottom: 15%;
+    height: 20%;
+   }
+
+   .btn-dropdown-size {
+    height: 20%;
+    font-size: 2.5vw;
+    padding-top: 0.5%
+   }
+
+   .dropdown-menu {
+    font-size: 2vw;
+   }
+
+   .email-input {
+   padding: 3%;
+   font-size: 2vw;
+   margin-bottom: 2%;
+   }
+
+   .btn-email {
+   padding: 2%;
+   font-size: 2vw;
+}
+}
+
+/*iPad Pro Landscape  */
+
+@media only screen 
+and (min-device-width: 1024px) 
+and (max-device-width: 1366px)
+and (orientation: landscape) {
+.inside-div{
+      padding-top: 20%
+   }
+
+.lg-text {
+    font-size: 2.8vw;
+ }
+
+ .one-btn {
+   height: 20%;
+   font-size: 4vw;
+}
+
+.btn-container{
+   height: 30%;
+   bottom: 10%;
+   grid-gap: 0.8vw;
+}
+
+.btn-center {
+   margin: 0 0.6vw;
+   width: 14vw;
+   height: 10vw;
+   font-size: 1.77vw;
+}
+
+.btn-container-dropdown {
+    bottom: 18%;
+    height: 20%;
+}
+
+.btn-dropdown-size {
+    height: 35%;
+    font-size: 2.5vw;
+    padding-top: 0.5%
+}
+
+.dropdown-menu {
+    font-size: 2vw;
+}
+
+.link {
+   position: absolute;
+   bottom: 3%;
+   margin-top: 2%;
+   margin-left: 25%;
+   font-size: 2vw;
+}
+}

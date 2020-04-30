@@ -216,6 +216,43 @@ FROM city
 WHERE id = :id;
 
 
+-- :name create-address! :! :n
+-- :doc creates a new address for a city record
+INSERT INTO address
+(location, city_id)
+VALUES (:address, :city-id);
+
+-- :name update-address! :! :n
+-- :doc updates an existing address record
+UPDATE address
+SET location = :address, city_id = :city-id
+WHERE id = :id;
+
+-- :name get-address :? :1
+-- :doc retrieves a address record given the id
+SELECT *
+FROM address
+WHERE id = :id;
+
+-- :name get-address-by-city-id :? :*
+-- :doc retrieves a coll of address records given the city_id
+SELECT id, location
+FROM address
+WHERE city_id = :city-id;
+
+-- :name get-addresses :? :*
+-- :doc retrieves all address records ordered by city_id
+SELECT *
+FROM address
+ORDER BY city_id;
+
+-- :name delete-address! :! :n
+-- :doc deletes an address record given the id
+DELETE
+FROM address
+WHERE id = :id;
+
+
 -- :name create-quiz! :! :n
 -- :doc creates a new quiz record
 INSERT INTO quiz

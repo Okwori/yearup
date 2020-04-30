@@ -26,27 +26,49 @@
     {:navigate-fx! [url-key params query]}))
 
 (rf/reg-event-db
-  :set-docs
+  :set-quiz
   (fn [db [_ docs]]
-    (assoc db :docs docs)))
+    (assoc db :quiz docs)))
 
 (rf/reg-event-fx
-  :fetch-docs
+  :slide-one
+  (fn [db _] (assoc db :hey (inc 1)))
+  ;(fn [{:keys [db]} [_ id]]                                            ;(assoc db :hey id)
+  ;  {:db (assoc db :hey id)})
+  )
+
+(rf/reg-event-fx
+  :fetch-quiz
   (fn [_ _]
-    {:http-xhrio {:method          :get
-                  :uri             "/docs"
-                  :response-format (ajax/raw-response-format)
-                  :on-success      [:set-docs]}}))
+    {:http-xhrio {:method          :post
+                  :uri             "/api/v1/question/list"
+                  :params           {:quizId 1}
+                  :format          (ajax/json-request-format)
+                  :response-format (ajax/transit-response-format)
+                  :on-success      [:set-quiz]}}))
+
+;(rf/reg-event-fx
+;  :fetch-cities
+;  (fn [_ _]
+;    {:http-xhrio {:method          :get
+;                  :uri             "/api/v1/cities"
+;                  :format          (ajax/json-request-format)
+;                  :response-format (ajax/transit-response-format)
+;                  :on-success      [:set-cities]}}))
 
 (rf/reg-event-db
   :common/set-error
   (fn [db [_ error]]
     (assoc db :common/error error)))
 
+;(rf/reg-event-fx
+;  :quiz/start
+;  (fn [_ _] ))
+
 (rf/reg-event-fx
   :page/init-home
   (fn [_ _]
-    {:dispatch [:fetch-docs]}))
+    {:dispatch [:fetch-quiz]}))
 
 ;;subscriptions
 
@@ -68,9 +90,14 @@
     (-> route :data :view)))
 
 (rf/reg-sub
-  :docs
+  :quiz
   (fn [db _]
-    (:docs db)))
+    (:quiz db)))
+
+(rf/reg-sub
+  :hey
+  (fn [db _]
+    (:hey db)))
 
 (rf/reg-sub
   :common/error
