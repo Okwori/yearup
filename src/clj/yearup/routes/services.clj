@@ -39,7 +39,7 @@
    ;; swagger documentation
    ["" {:no-doc  true
         :swagger {:info {:title       "YearUp API"
-                         :description "https://docs.google.com/document/d/1N05yZhl6mOhh6zyFliscv8pniz0gB5vv4oii3jj-p0s/edit?usp=sharing"}}}
+                         :description "YearUp Direct Service Programme 2020"}}}
 
     ["/swagger.json"
      {:get (swagger/create-swagger-handler)}]
