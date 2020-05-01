@@ -144,9 +144,10 @@ ORDER BY id;
 
 -- :name get-option-by-question-id :? :*
 -- :doc retrieves all option records order by question id
-SELECT o.id, o.name
+SELECT o.id, o.name, o.sentiment
 FROM option o
-WHERE question_id = :question-id;
+WHERE question_id = :question-id
+ORDER BY sentiment;
 
 -- :name delete-option! :! :n
 -- :doc deletes a option record given the id
