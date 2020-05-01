@@ -89,3 +89,8 @@
   "Gets the value for a setting enum defined like Video URL"
   [name]
   (db/get-setting {:name name}))
+
+(defn create-user-by-email
+  "Create a new user record with the email specified"
+  [email]
+  (db/create-user-return-id! {:email email :first_name nil :last_name nil :pass nil}))

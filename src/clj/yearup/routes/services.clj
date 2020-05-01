@@ -102,19 +102,27 @@
                             :body   {:data (db/get-quiz)}})}}]]
 
    ["/user"
-    {:get  {:summary    "returns the user with the specified email"
-            :parameters {:query {:email string?}}
-            :responses  {200 {:body {:data map?}}}
-            :handler    (fn [{{{:keys [email]} :query} :parameters}]
-                          {:status 200
-                           :body   {:data (db/get-user-by-email email)}})}
+    [""
+     {:get  {:summary    "returns the user with the specified email"
+             :parameters {:query {:email string?}}
+             :responses  {200 {:body {:data map?}}}
+             :handler    (fn [{{{:keys [email]} :query} :parameters}]
+                           {:status 200
+                            :body   {:data (db/get-user-by-email email)}})}
 
-     :post {:summary    "returns the user with the specified Id"
-            :parameters {:body {:userId int?}}
-            :responses  {200 {:body {:data map?}}}
-            :handler    (fn [{{{:keys [userId]} :body} :parameters}]
-                          {:status 200
-                           :body   {:data (db/get-user-by-id userId)}})}}]
+      :post {:summary    "returns the user with the specified Id"
+             :parameters {:body {:userId int?}}
+             :responses  {200 {:body {:data map?}}}
+             :handler    (fn [{{{:keys [userId]} :body} :parameters}]
+                           {:status 200
+                            :body   {:data (db/get-user-by-id userId)}})}}]
+    ["/create"
+     {:post {:summary    "create a user with the specified email"
+             :parameters {:body {:email string?}}
+             :responses  {200 {:body {:id int?}}}
+             :handler    (fn [{{{:keys [email]} :body} :parameters}]
+                           {:status 200
+                            :body   (db/create-user-by-email email)})}}] ]
 
    ["/video"
     {:get {:summary    "returns the URL of the demo video on one of the slides"
