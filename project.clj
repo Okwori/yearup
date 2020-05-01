@@ -1,7 +1,7 @@
 (defproject yearup "0.1.0-SNAPSHOT"
 
-  :description "YearUp: YU DS Program"
-  :url "http://okwori.github.com/"
+  :description "YearUp: 2020 DS Program"
+  :url "http://yearup.herokuapp.com/"
 
   :dependencies [[ch.qos.logback/logback-classic "1.2.3"]
                  [cheshire "5.9.0"]
