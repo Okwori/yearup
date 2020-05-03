@@ -147,7 +147,7 @@ ORDER BY id;
 SELECT o.id, o.name, o.sentiment
 FROM option o
 WHERE question_id = :question-id
-ORDER BY sentiment;
+order by id asc ;
 
 -- :name delete-option! :! :n
 -- :doc deletes a option record given the id
