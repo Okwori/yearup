@@ -43,8 +43,8 @@
 
 (defn submit-answers
   "Persists the result of the quiz for the specified user and a collection of options"
-  [user-id options-coll]
-  (let [q (map #(db/create-answer! {:option-id % :user-id user-id}) options-coll)
+  [user-id options-coll city-id]
+  (let [q (map #(db/create-answer! {:option-id % :user-id user-id :city-id city-id}) options-coll)
         q1 (Integer/parseInt (:value (db/get-setting {:name "RATIO"})))
         q2 (if (every? #(= % 1) q) (filter #(not (nil? %)) (map #(db/get-option-by-sentiment-not-null {:id %}) options-coll)))
         q3 (map #(:sentiment %) q2)

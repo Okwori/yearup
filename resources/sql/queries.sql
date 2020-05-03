@@ -159,8 +159,8 @@ WHERE id = :id;
 -- :name create-answer! :! :n
 -- :doc creates a new answer record
 INSERT INTO answer
-    (option_id, user_id)
-VALUES (:option-id, :user-id);
+    (option_id, user_id, city_id)
+VALUES (:option-id, :user-id, :city-id);
 
 -- :name update-answer! :! :n
 -- :doc updates an existing answer record

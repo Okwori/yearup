@@ -70,11 +70,11 @@
 
    ["/submit"
     {:post {:summary    "accepts a user and a collection options selected, returns message based on options"
-            :parameters {:body {:userId int? :selections (vector? int?)}}
+            :parameters {:body {:userId int? :selections (vector? int?) :cityId int?}}
             :responses  {200 {:body map?}}
-            :handler    (fn [{{{:keys [userId selections]} :body} :parameters}]
+            :handler    (fn [{{{:keys [userId selections cityId]} :body} :parameters}]
                           {:status 200
-                           :body   (db/submit-answers userId selections)})}}]
+                           :body   (db/submit-answers userId selections cityId)})}}]
 
    ["/options"
     {:post {:summary    "returns the options for a particular question"
