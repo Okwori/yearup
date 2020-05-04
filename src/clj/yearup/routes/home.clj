@@ -10,11 +10,15 @@
 (defn home-page [request]
   (layout/render request "home.html"))
 
+(defn admin-page [request]
+  (layout/render request "admin.html"))
+
 (defn home-routes []
   [""
    {:middleware [middleware/wrap-csrf
                  middleware/wrap-formats]}
    ["/" {:get home-page}]
+   ["/admin" {:get admin-page}]
    ["/graphiql" {:get (fn [request] (layout/render request "graphiql.html"))}]
    ["/docs" {:get (fn [_]
                     (-> (response/ok (-> "docs/docs.md" io/resource slurp))
