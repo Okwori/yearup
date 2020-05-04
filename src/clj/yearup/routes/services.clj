@@ -68,6 +68,14 @@
                            {:status 200
                             :body   (db/get-questions quizId)})}}] ]
 
+   ["/report"
+    {:post {:summary    "returns all the data needs for the dashboard"
+            :parameters nil
+            :responses  {200 {:body map?}}
+            :handler    (fn [{{{:keys []} :body} :parameters}]
+                          {:status 200
+                           :body   (db/report)})}}]
+
    ["/submit"
     {:post {:summary    "accepts a user and a collection options selected, returns message based on options"
             :parameters {:body {:userId int? :selections (vector? int?) :cityId int?}}
