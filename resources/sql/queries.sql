@@ -291,10 +291,24 @@ FROM question q
          inner join option o on q.id = o.question_id
 WHERE q.id = :id;
 
-
 -- :name get-question-by-quiz :? :*
 -- :doc retrieves all questions and corresponding options
 SELECT quiz.*, q.id as question_id, q.question, q.sub_note, o.id as option_id, o.name
 FROM quiz
          inner join (question q left outer join option o on q.id = o.question_id) on quiz.id = q.quiz_id
 WHERE quiz.id = :id;
+
+-- :name get-distinct-user :? :*
+SELECT DISTINCT user_id
+FROM answer;
+
+-- :name get-user-positive-response :? :*
+SELECT count(o.id)
+FROM answer a inner join option o on a.option_id = o.id
+WHERE o.sentiment = 1 AND user_id = :user-id;
+
+-- :name get-answers-by-user :? :*
+SELECT *
+FROM answer
+WHERE user_id = :user-id;
+
