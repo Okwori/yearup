@@ -97,7 +97,7 @@
     [["/" {:name        :home
            :view        #'home-page
            :controllers [{:start (fn [_] (rf/dispatch [:page/init-home]))}]}]
-     ["/about" {:name :about
+     ["/admin" {:name :about
                 :view #'admin-page}]]))
 
 (defn start-router! []
