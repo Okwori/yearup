@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="favicon.ico" type="image/ico" />
+
+    <title>Admin Board |YearUp DS Program</title>
+
+    <!-- Bootstrap -->
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- Datatables -->
+    <link href="/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+    <!-- JQVMap -->
+    <link href="/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+
+    <!-- Custom Theme Style -->
+    <link href="/build/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+<div id="app"></div>
+<!--<div>-->
+<!--    <p>Hey Bro</p>-->
+<!--</div>-->
+<script type="text/javascript">
+    var csrfToken = "{{csrf-token}}";
+</script>
+{% script "/js/app.js" %}
+<!-- jQuery -->
+{% script "/vendors/jquery/dist/jquery.min.js" %}
+{% script "/vendors/jquery/dist/jquery.min.js" %}
+<!-- Bootstrap -->
+{% script "/vendors/bootstrap/dist/js/bootstrap.bundle.min.js" %}
+<!-- FastClick -->
+{% script "/vendors/fastclick/lib/fastclick.js" %}
+<!-- Chart.js -->
+{% script "/vendors/Chart.js/dist/Chart.min.js" %}
+<!-- iCheck -->
+{% script "/vendors/iCheck/icheck.min.js" %}
+<!-- Skycons -->
+{% script "/vendors/skycons/skycons.js" %}
+<!-- DateJS -->
+{% script "/vendors/DateJS/build/date.js" %}
+<!-- Datatables -->
+{% script "/vendors/datatables.net/js/jquery.dataTables.min.js" %}
+{% script "/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js" %}
+{% script "/vendors/datatables.net-buttons/js/dataTables.buttons.min.js" %}
+{% script "/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js" %}
+{% script "/vendors/datatables.net-buttons/js/buttons.flash.min.js" %}
+{% script "/vendors/datatables.net-buttons/js/buttons.html5.min.js" %}
+{% script "/vendors/datatables.net-buttons/js/buttons.print.min.js" %}
+{% script "/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js" %}
+{% script "/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js" %}
+{% script "/vendors/datatables.net-responsive/js/dataTables.responsive.min.js" %}
+{% script "/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js" %}
+{% script "/vendors/datatables.net-scroller/js/dataTables.scroller.min.js" %}
+{% script "/vendors/jszip/dist/jszip.min.js" %}
+{% script "/vendors/pdfmake/build/pdfmake.min.js" %}
+{% script "/vendors/pdfmake/build/vfs_fonts.js" %}
+
+<!-- Custom Theme Scripts -->
+{% script "/build/js/custom.js" %}
+
+</body>
+</html>
