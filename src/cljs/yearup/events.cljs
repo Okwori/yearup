@@ -8,22 +8,22 @@
 ;;dispatchers
 
 (rf/reg-event-db
-  :navigate
+  :common/navigate
   (fn [db [_ match]]
     (let [old-match (:common/route db)
           new-match (assoc match :controllers
                                  (rfc/apply-controllers (:controllers old-match) match))]
-      (assoc db :route new-match))))
+      (assoc db :common/route new-match))))
 
 (rf/reg-fx
-  :navigate-fx!
+  :common/navigate-fx!
   (fn [[k & [params query]]]
     (rfe/push-state k params query)))
 
 (rf/reg-event-fx
-  :navigate!
+  :common/navigate!
   (fn [_ [_ url-key params query]]
-    {:navigate-fx! [url-key params query]}))
+    {:common/navigate-fx! [url-key params query]}))
 
 (rf/reg-event-db
   :common/set-error
@@ -49,6 +49,7 @@
                   :response-format (ajax/transit-response-format)
                   :on-success      [:set-quiz]
                   :on-failure      [:common/set-error]}} ))
+
 (rf/reg-event-db
   :clear-exceptions
   (fn [db _]
@@ -134,27 +135,56 @@
     {:db (assoc-in db [:answers :selections] (conj (get-in db [:answers :selections]) (:id option)))
      :dispatch [:push-answer]}))
 
+(rf/reg-event-db
+  :set-report
+  (fn [db [_ report]]
+    (assoc db :report report)))
+
+(rf/reg-event-fx
+  :fetch-report
+  (fn [_ _]
+    {:http-xhrio {:method          :post
+                  :uri             "/api/v1/report"
+                  :params          nil
+                  :format          (ajax/json-request-format)
+                  :response-format (ajax/transit-response-format)
+                  :on-success      [:set-report]
+                  :on-failure      [:common/set-error]}}))
+
 (rf/reg-event-fx
   :page/init-home
   (fn [_ _]
-    {:dispatch [:fetch-quiz]}))
+    ;(if (= id 1)
+      {:dispatch [:fetch-quiz]}
+      ;{:dispatch [:fetch-report]}
+    ))
+
+(rf/reg-event-fx
+  :page/remove-home
+  (fn [db _]
+    {:db (dissoc db :common/route)}))
+
+(rf/reg-event-fx
+  :page/init-admin
+  (fn [_ _]
+    {:dispatch [:fetch-report]}))
 
 ;;subscriptions
 
 (rf/reg-sub
-  :route
+  :common/route
   (fn [db _]
-    (-> db :route)))
+    (-> db :common/route)))
 
 (rf/reg-sub
-  :page-id
-  :<- [:route]
+  :common/page-id
+  :<- [:common/route]
   (fn [route _]
     (-> route :data :name)))
 
 (rf/reg-sub
-  :page
-  :<- [:route]
+  :common/page
+  :<- [:common/route]
   (fn [route _]
     (-> route :data :view)))
 
