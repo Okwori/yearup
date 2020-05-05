@@ -94,3 +94,33 @@
   "Create a new user record with the email specified"
   [email]
   (db/create-user-return-id! {:email email :first_name nil :last_name nil :pass nil}))
+
+(defn report
+  "Get all the data needed for the admin dashboard"
+  []
+  (let [q1 (db/get-answers)
+        distinct-user-ids (into [] (map #(:user_id %) (db/get-distinct-user)))
+        ratio (Integer/parseInt (:value (db/get-setting {:name "RATIO"})))
+        responses (map (fn [n]
+                         (let [m (db/get-answers-by-user {:user-id n})]
+                           {:city      (:name (db/get-city {:id (:city_id (first m))}))
+                            :email     (:email (db/get-user {:id (:user_id (first m))}))
+                            :date      (:date (first m))
+                            :accepted  (let [options-m (map #(:option_id %) m)
+                                             sentiments (map #(:sentiment (db/get-option {:id %})) options-m)
+                                             total-sentiments (apply + sentiments)
+                                             count-m (count m)]
+                                         (if (>= (* (/ total-sentiments count-m) 100) ratio)
+                                           "Yes" "No"))
+                            :responses (into [] (map (fn [item-m]
+                                                       (let [option-m (db/get-option {:id (:option_id item-m)})]
+                                                         {:question (:question (db/get-question {:quiz-id 1
+                                                                                                 :id      (:question_id option-m)}))
+                                                          :option   (:name option-m)})) m))})) distinct-user-ids)
+        total (count distinct-user-ids)
+        positive (apply + (map #(if (= (:accepted %) "Yes") 1 0) responses))]
+    {:totalNo    total
+     :positiveNo positive
+     :negativeNo (- total positive)
+     :ratio      ratio
+     :response   (into [] responses)}) )
