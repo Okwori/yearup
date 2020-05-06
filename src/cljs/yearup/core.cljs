@@ -215,8 +215,12 @@
                          (let [vals-email (r/atom {:email ""})]
                            [:li [:div.fields
                                 [:div.field.half
-                                 [:input#user-email {:type        "email" :name        "user-email"  :required    "required"
+                                 [:input#user-email {:type        "email" :name "user-email" :required "required"
                                                      :placeholder "email@example.com"
+                                                     :on-key-down #(if (= (.-key %) "Enter")
+                                                                     (if (or (not (s/valid? ::email (:email @vals-email))) (nil? (:email @vals-email)) (empty? (:email @vals-email)))
+                                                                       (rf/dispatch [:common/set-error "Enter a valid email address"])
+                                                                       (rf/dispatch [:submit-user @vals-email])))
                                                      :on-change   #(swap! vals-email assoc :email (-> % .-target .-value))}]]
                                 [:a.button.primary {:on-click #(if (or (not (s/valid? ::email (:email @vals-email))) (nil? (:email @vals-email)) (empty? (:email @vals-email)))
                                                                  (rf/dispatch [:common/set-error "Enter a valid email address"])
