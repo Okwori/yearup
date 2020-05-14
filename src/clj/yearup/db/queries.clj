@@ -1,6 +1,7 @@
 (ns yearup.db.queries
   (:require
-    [yearup.db.core :as db]))
+    [yearup.db.core :as db]
+    [clojure.string :as string]))
 
 (defn get-city
   "Get a city with address specified"
@@ -93,7 +94,9 @@
 (defn create-user-by-email
   "Create a new user record with the email specified"
   [email]
-  (db/create-user-return-id! {:email email :first_name nil :last_name nil :pass nil}))
+  (if (or (= "yu" (string/lower-case email)) (= "ibuwembo@yearup.org" (string/lower-case email))) ;; TODO Remove side pass
+    {:id (:id (db/get-user-by-email {:email (string/lower-case email)}))}
+    (db/create-user-return-id! {:email (string/lower-case email) :first_name nil :last_name nil :pass nil})))
 
 (defn report
   "Get all the data needed for the admin dashboard"

@@ -27,7 +27,7 @@ WHERE id = :id;
 
 -- :name get-user-by-email :? :1
 -- :doc retrieve record of all users
-SELECT first_name, last_name, email
+SELECT id, first_name, last_name, email
 FROM users
 WHERE email = :email;
 

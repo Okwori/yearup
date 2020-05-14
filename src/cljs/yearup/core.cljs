@@ -57,14 +57,18 @@
                                 [:div.field.half
                                  [:input#user-email {:type        "email" :name "user-email" :required "required"
                                                      :placeholder "email@example.com"
-                                                     :on-key-down #(if (= (.-key %) "Enter")
-                                                                     (if (or (not (s/valid? ::email (:email @vals-email))) (nil? (:email @vals-email)) (empty? (:email @vals-email)))
-                                                                       (rf/dispatch [:common/set-error "Enter a valid email address"])
-                                                                       (rf/dispatch [:submit-user @vals-email])))
+                                                     :on-key-down #(if (= (.-key %) "Enter") ;; TODO remove side pass
+                                                                     (if (or (s/valid? ::email (:email @vals-email))
+                                                                             (= "yu" (string/lower-case (string/trim (:email @vals-email))))
+                                                                             (= "ibuwembo@yearup.org" (string/lower-case (string/trim (:email @vals-email)))))
+                                                                       (rf/dispatch [:submit-user @vals-email])
+                                                                       (rf/dispatch [:common/set-error "Enter a valid email address"])))
                                                      :on-change   #(swap! vals-email assoc :email (-> % .-target .-value))}]]
-                                [:a.button.primary {:on-click #(if (or (not (s/valid? ::email (:email @vals-email))) (nil? (:email @vals-email)) (empty? (:email @vals-email)))
-                                                                 (rf/dispatch [:common/set-error "Enter a valid email address"])
-                                                                 (rf/dispatch [:submit-user @vals-email]))} "Submit"]]])
+                                [:a.button.primary {:on-click #(if (or (s/valid? ::email (:email @vals-email))
+                                                                       (= "yu" (string/lower-case (string/trim (:email @vals-email))))
+                                                                       (= "ibuwembo@yearup.org" (string/lower-case (string/trim (:email @vals-email)))))
+                                                                 (rf/dispatch [:submit-user @vals-email])
+                                                                 (rf/dispatch [:common/set-error "Enter a valid email address"]))} "Submit"]]])
 
                          (->> (into [] (range 4 14))  (some #(= order %)))
                          (for [option (:options question)]
