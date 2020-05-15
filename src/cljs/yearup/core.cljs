@@ -46,7 +46,7 @@
              [:nav
               [:ul (cond (= order 1)
                          (for [city cities]
-                           [:li [:a {:key (:id city) :on-click #(rf/dispatch [:submit city])} (:name city)]])
+                           ^{:key (:id city)} [:li [:a {:on-click #(rf/dispatch [:submit city])} (:name city)]])
 
                          (= order 2)
                          [:li [:a {:style {:background-color "#AAA4A2"} :on-click #(rf/dispatch [:submit])} (:name (first (:options question)))]]
@@ -72,8 +72,7 @@
 
                          (->> (into [] (range 4 14))  (some #(= order %)))
                          (for [option (:options question)]
-                           [:li [:a.button {:key      (:id option)
-                                            :style    (cond (= (:sentiment option) 0) {:background-color "#E11D0D"}
+                           ^{:key (:id option)}[:li [:a.button {:style    (cond (= (:sentiment option) 0) {:background-color "#E11D0D"}
                                                             (string/includes? (:name option) "Not sure") {:background-color "#AAA4A2"}
                                                             (= option (first (:options question))) {:background-color "#27760D"})
                                             :on-click (if (= order 13 )
