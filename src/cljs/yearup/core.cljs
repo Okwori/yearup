@@ -31,7 +31,7 @@
              [:div.content
               [:div.inner
                (if (= order 13)
-                 (do (when-let [city-id (get-in answer [:city :id])]
+                 (do (when-let [city-id (get-in answer [:city-id])]
                          (condp = city-id
                            1 [:h1 [:strong (str (:detail question) " Culver City in West Los Angeles")]]
                            2 [:h1 [:strong (str (:detail question) " one of 3 locations: Wall St., NYC, TriBeCa, NYC, Jersey City, NJ")]]
