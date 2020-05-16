@@ -68,7 +68,7 @@
   :submit
   (fn [{:keys [db]} [_ input]]
     {:db (cond (nil? input) db
-               (contains? input :addresses) (assoc-in db [:answers :city] input)
+               (contains? input :city-id) (assoc-in db [:answers] input)
                (and (= (count input) 1) (contains? input :id))(assoc-in db [:answers :user] {:user-id (:id input)
                                                                                              :email   (get-in db [:answers :user :email])})
                (and (not (nil? input))  (contains? input (and :id :name :sentiment))) (assoc-in db [:answers :selections]
@@ -118,7 +118,7 @@
                   :uri             "/api/v1/submit"
                   :params          {:userId (get-in db [:answers :user :user-id])
                                     :selections (get-in db [:answers :selections])
-                                    :cityId (get-in db [:answers :city :id])}
+                                    :cityId (get-in db [:answers :city-id])}
                   :format          (ajax/json-request-format)
                   :response-format (ajax/transit-response-format)
                   :on-success      [:finish]

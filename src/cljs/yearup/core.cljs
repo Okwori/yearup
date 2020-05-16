@@ -38,15 +38,17 @@
                            3 [:h1 [:strong (str (:detail question)" Uptown Charlotte")]])))
                  [:h1 [:strong (:detail question)]])
                (if (or (= order 12) (= order 13)) (do [:br][:br]) (do [:br][:br][:br]))
-               (if (= order 1)
-                 [:h3 (:name (first (:options question)))]
+               (if (not= order 1)
                  [:h3 (:subNote question)])]
               (when-let [error @(rf/subscribe [:common/error])]
                 [:h4 {:style {:color "red"}} (str error)])]
              [:nav
               [:ul (cond (= order 1)
+                         [:select {:name "city-drop-down" :id "city-drop-down"
+                                               :on-change #(rf/dispatch [:submit {:city-id (js/parseInt (-> % .-target .-value))}])}
+                                      [:option "Select the CITY closest to you"]
                          (for [city cities]
-                           ^{:key (:id city)} [:li [:a {:on-click #(rf/dispatch [:submit city])} (:name city)]])
+                             ^{:key (:id city)} [:option {:value (:id city)} (:name city)])]
 
                          (= order 2)
                          [:li [:a {:style {:background-color "#AAA4A2"} :on-click #(rf/dispatch [:submit])} (:name (first (:options question)))]]
@@ -88,7 +90,7 @@
               [:p.copyright "© 2020 YearUp"]]]
        [:div#bg {:style {:background-position "center" :background-size "cover" :background-repeat "no-repeat" :z-index "1"
                         :background-image  (str "url('img/", (if (= order 13)
-                                                               (do (when-let [city-id (get-in answer [:city :id])]
+                                                               (do (when-let [city-id (get-in answer [:city-id])]
                                                                      (condp = city-id 1 "losAngeles.jpg" 2 "newYork.jpg" 3 "charlotte.jpg")))
                                                                (:backgroundImage question)), "')")}}]])))
 
