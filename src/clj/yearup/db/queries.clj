@@ -1,14 +1,16 @@
 (ns yearup.db.queries
   (:require
-    [yearup.db.core :as db]
-    [clojure.string :as string]))
+    [clojure.string :as string]
+    [yearup.db.core :as db]))
 
 (defn get-city
   "Get a city with address specified"
   [id]
-  (let [city-query (db/get-city {:id id})
-        address-query (into [] (db/get-address-by-city-id {:city-id (:id city-query)})) ]
-    {:id (:id city-query) :name (:name city-query) :addresses address-query}))
+  (let [city-query (db/get-city {:id id})]
+    {:id (:id city-query)
+     :name (:name city-query)
+     :background-image (:background_image city-query)
+     :question (:question city-query)}))
 
 (defn get-cities
   "Gets the vector of the cities defined for YearUp"
@@ -60,16 +62,14 @@
               status (:status query)]
           {:quizId      (:id query)
            :description (:desc query)
-           :status      (cond
-                          (= status 1) "ACTIVE"
-                          (= status 2) "INACTIVE")}))
+           :status      (cond (= status 1) "ACTIVE"
+                              (= status 2) "INACTIVE")}))
   ([] (into [] (let [query (db/get-quizzes)]
                  (map #(let [status (:status %)]
                          {:quizId      (:id %)
                           :description (:desc %)
-                          :status      (cond
-                                         (= status 1) "ACTIVE"
-                                         (= status 2) "INACTIVE")}) query)))))
+                          :status      (cond (= status 1) "ACTIVE"
+                                             (= status 2) "INACTIVE")}) query)))))
 
 (defn get-user-by-id
   "Gets a user by Id specified"

@@ -32,10 +32,8 @@
               [:div.inner
                (if (= order 13)
                  (do (when-let [city-id (get-in answer [:city-id])]
-                         (condp = city-id
-                           1 [:h1 [:strong (str (:detail question) " Culver City in West Los Angeles")]]
-                           2 [:h1 [:strong (str (:detail question) " one of 3 locations: Wall St., NYC, TriBeCa, NYC, Jersey City, NJ")]]
-                           3 [:h1 [:strong (str (:detail question)" Uptown Charlotte")]])))
+                       (let [city (filter #(= (:id %) city-id) cities)]
+                         [:h1 [:strong (:question (first city))]])))
                  [:h1 [:strong (:detail question)]])
                (if (or (= order 12) (= order 13)) (do [:br][:br]) (do [:br][:br][:br]))
                (if (not= order 1)
@@ -89,10 +87,11 @@
              [:footer#footer
               [:p.copyright "© 2020 YearUp"]]]
        [:div#bg {:style {:background-position "center" :background-size "cover" :background-repeat "no-repeat" :z-index "1"
-                        :background-image  (str "url('img/", (if (= order 13)
-                                                               (do (when-let [city-id (get-in answer [:city-id])]
-                                                                     (condp = city-id 1 "losAngeles.jpg" 2 "newYork.jpg" 3 "charlotte.jpg")))
-                                                               (:backgroundImage question)), "')")}}]])))
+                         :background-image    (str "url('img/", (if (= order 13)
+                                                                  (do (when-let [city-id (get-in answer [:city-id])]
+                                                                        (let [city (filter #(= (:id %) city-id) cities)]
+                                                                          (:background-image (first city)))))
+                                                                  (:backgroundImage question)), "')")}}]])))
 
 (defn page []
   (if-let [page @(rf/subscribe [:common/page])]
