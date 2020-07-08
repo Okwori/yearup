@@ -1,1 +1,1 @@
-web: java -cp target/uberjar/yearup.jar clojure.main -m yearup.core
+web: java -Dclojure.main.report=stderr -cp target/uberjar/yearup.jar clojure.main -m yearup.core
