@@ -3,44 +3,49 @@
   :description "YearUp: 2020 DS Program"
   :url "http://yearup.herokuapp.com/"
 
-  :dependencies [[ch.qos.logback/logback-classic "1.2.3"]
-                 [cheshire "5.9.0"]
+  :dependencies [[buddy/buddy-sign "3.1.0"]
+                 [ch.qos.logback/logback-classic "1.2.3"]
+                 [cheshire "5.10.0"]
                  [cljs-ajax "0.8.0"]
                  [clojure.java-time "0.3.2"]
-                 [com.cognitect/transit-clj "0.8.319"]
+                 [com.cognitect/transit-clj "1.0.324"]
+                 [com.fasterxml.jackson.core/jackson-core "2.11.0"]
+                 [com.fasterxml.jackson.core/jackson-databind "2.11.0"]
                  [com.walmartlabs/lacinia "0.32.0"]
-                 [conman "0.8.4"]
-                 [cprop "0.1.15"]
+                 [conman "0.8.9"]
+                 [cprop "0.1.17"]
                  [day8.re-frame/http-fx "0.1.6"]
-                 [expound "0.8.3"]
+                 [expound "0.8.4"]
                  [funcool/struct "1.4.0"]
-                 [luminus-jetty "0.1.7"]
-                 [luminus-migrations "0.6.6"]
+                 [luminus-jetty "0.1.9"]
+                 [luminus-migrations "0.6.7"]
                  [luminus-transit "0.1.2"]
                  [luminus/ring-ttl-session "0.3.3"]
-                 [markdown-clj "1.10.1"]
-                 [metosin/muuntaja "0.6.6"]
-                 [metosin/reitit "0.3.10"]
+                 [markdown-clj "1.10.4"]
+                 [metasoarous/oz "1.6.0-alpha6"]
+                 [metosin/jsonista "0.2.6"]
+                 [metosin/muuntaja "0.6.7"]
+                 [metosin/reitit "0.5.1"]
                  [metosin/ring-http-response "0.9.1"]
                  [mount "0.1.16"]
-                 [nrepl "0.6.0"]
+                 [nrepl "0.7.0"]
                  [org.clojure/clojure "1.10.1"]
-                 [org.clojure/clojurescript "1.10.597" :scope "provided"]
+                 [org.clojure/clojurescript "1.10.764" :scope "provided"]
                  [org.clojure/data.json "0.2.6"]
-                 [org.clojure/tools.cli "0.4.2"]
-                 [org.clojure/tools.logging "0.5.0"]
-                 [org.postgresql/postgresql "42.2.9"]
-                 [org.webjars.npm/bulma "0.8.0"]
+                 ;[org.webjars/datatables "1.10.20"]
+                 [org.clojure/tools.cli "1.0.194"]
+                 [org.clojure/tools.logging "1.1.0"]
+                 [org.postgresql/postgresql "42.2.11"]
+                 [org.webjars.npm/bulma "0.8.2"]
                  [org.webjars.npm/material-icons "0.3.1"]
-                 [org.webjars/webjars-locator "0.38"]
-                 [re-frame "0.10.9"]
-                 [reagent "0.9.0-rc3"]
+                 [org.webjars/webjars-locator "0.40"]
+                 [re-frame "0.12.0"]
+                 [reagent "0.10.0"]
                  [ring-webjars "0.2.0"]
-                 [ring/ring-core "1.8.0"]
+                 [ring/ring-core "1.8.1"]
                  [ring/ring-defaults "0.3.2"]
-                 [selmer "1.12.18"]
-                 [tick "0.4.23-alpha"]
-                 [metasoarous/oz "1.6.0-alpha6"]]
+                 [selmer "1.12.24"]
+                 [tick "0.4.23-alpha"]]
 
   :min-lein-version "2.0.0"
 
@@ -86,57 +91,55 @@
    :dev           [:project/dev :profiles/dev]
    :test          [:project/dev :project/test :profiles/test]
 
-   :project/dev   {:jvm-opts       ["-Dconf=dev-config.edn"]
-                   :dependencies   [[binaryage/devtools "0.9.11"]
-                                    [cider/piggieback "0.4.2"]
-                                    [doo "0.1.11"]
-                                    [figwheel-sidecar "0.5.19"]
-                                    [pjstadig/humane-test-output "0.10.0"]
-                                    [prone "2019-07-08"]
-                                    [re-frisk "0.5.4.1"]
-                                    [ring/ring-devel "1.8.0"]
-                                    [ring/ring-mock "0.4.0"]
-                                    [midje "1.9.9"]]
-                   :plugins        [[com.jakemccrary/lein-test-refresh "0.24.1"]
-                                    [jonase/eastwood "0.3.5"]
-                                    [lein-doo "0.1.11"]
-                                    [lein-figwheel "0.5.19"]
-                                    [lein-midje "3.2.2"]]
-                   :cljsbuild      {:builds
-                                    {:app
-                                     {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
-                                      :figwheel     {:on-jsload "yearup.core/mount-components"}
-                                      :compiler
-                                                    {:main            "yearup.app"
-                                                     :asset-path      "/js/out"
-                                                     :output-to       "target/cljsbuild/public/js/app.js"
-                                                     :output-dir      "target/cljsbuild/public/js/out"
-                                                     :source-map      true
-                                                     :optimizations   :none
-                                                     :pretty-print    true
-                                                     :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
-                                                     :preloads        [re-frisk.preload]}}}}
-
-
-                   :doo            {:build "test"}
-                   :source-paths   ["env/dev/clj"]
-                   :resource-paths ["env/dev/resources"]
-                   :repl-options   {:init-ns user
-                                    :timeout 120000}
-                   :injections     [(require 'pjstadig.humane-test-output)
-                                    (pjstadig.humane-test-output/activate!)]}
-   :project/test  {:jvm-opts       ["-Dconf=test-config.edn"]
-                   :resource-paths ["env/test/resources"]
-                   :cljsbuild
-                                   {:builds
-                                    {:test
-                                     {:source-paths ["src/cljc" "src/cljs" "test/cljs"]
-                                      :compiler
-                                                    {:output-to     "target/test.js"
-                                                     :main          "yearup.doo-runner"
-                                                     :optimizations :whitespace
-                                                     :pretty-print  true}}}}
-
-                   }
-   :profiles/dev  {}
+   :project/dev  {:jvm-opts ["-Dconf=dev-config.edn" ]
+                  :dependencies [[binaryage/devtools "1.0.0"]
+                                 [cider/piggieback "0.5.0"]
+                                 [doo "0.1.11"]
+                                 [figwheel-sidecar "0.5.20"]
+                                 [pjstadig/humane-test-output "0.10.0"]
+                                 [prone "2020-01-17"]
+                                 [re-frisk "1.3.2"]
+                                 [ring/ring-devel "1.8.1"]
+                                 [ring/ring-mock "0.4.0"]]
+                  :plugins      [[com.jakemccrary/lein-test-refresh "0.24.1"]
+                                 [jonase/eastwood "0.3.5"]
+                                 [lein-doo "0.1.11"]
+                                 [lein-figwheel "0.5.20"]] 
+                  :cljsbuild{:builds
+                   {:app
+                    {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
+                     :figwheel {:on-jsload "yearup.core/mount-components"}
+                     :compiler
+                     {:main "yearup.app"
+                      :asset-path "/js/out"
+                      :output-to "target/cljsbuild/public/js/app.js"
+                      :output-dir "target/cljsbuild/public/js/out"
+                      :source-map true
+                      :optimizations :none
+                      :pretty-print true
+                      :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
+                      :preloads [re-frisk.preload]}}}}
+                  
+                  
+                  :doo {:build "test"}
+                  :source-paths ["env/dev/clj" ]
+                  :resource-paths ["env/dev/resources"]
+                  :repl-options {:init-ns user
+                                 :timeout 120000}
+                  :injections [(require 'pjstadig.humane-test-output)
+                               (pjstadig.humane-test-output/activate!)]}
+   :project/test {:jvm-opts ["-Dconf=test-config.edn" ]
+                  :resource-paths ["env/test/resources"] 
+                  :cljsbuild 
+                  {:builds
+                   {:test
+                    {:source-paths ["src/cljc" "src/cljs" "test/cljs"]
+                     :compiler
+                     {:output-to "target/test.js"
+                      :main "yearup.doo-runner"
+                      :optimizations :whitespace
+                      :pretty-print true}}}}
+                  
+                  }
+   :profiles/dev {}
    :profiles/test {}})
