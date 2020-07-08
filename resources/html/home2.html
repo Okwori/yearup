@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="favicon.png" type="image/ico" />
+
+    <title>Admin Board | YearUp</title>
+
+    <!-- Bootstrap -->
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- Datatables -->
+    <link href="/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="/build/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+<!--<div id="app"></div>-->
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;"><!-- TODO Fix ICON!-->
+                    <a href="#" class="site_title"><span>YearUp Admin</span></a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!-- /menu profile quick info -->
+
+                <br />
+
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <h3>General</h3>
+                        <ul class="nav side-menu">
+                            <li><a href="/admin"><i class="fa fa-dashboard"></i>Dashboard</a>
+                            </li>
+                            <li><a href="/setting"><i class="fa fa-cogs"></i>Setting</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /sidebar menu -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <div class="nav toggle">
+                    <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                </div>
+                <nav class="nav navbar-nav">
+                    <ul class=" navbar-right">
+                        <li class="nav-item dropdown open" style="padding-left: 15px;">
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <!-- top tiles -->
+            <div class="row" style="display: inline-block;" >
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+                    <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-user blue"></i>
+                        </div>
+                        <div class="count">{{report.totalNo}}</div>
+
+                        <h3>Total </h3>
+                        <p>Number of all the users that responded to the quiz</p>
+                    </div>
+                </div>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+                    <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-check green"></i>
+                        </div>
+                        <div class="count green">{{report.positiveNo}}</div>
+
+                        <h3>Positive</h3>
+                        <p>Number of responses that are positive based on ratio</p>
+                    </div>
+                </div>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+                    <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-thumbs-down red"></i>
+                        </div>
+                        <div class="count">{{report.negativeNo}}</div>
+
+                        <h3>Negative</h3>
+                        <p>Number of responses that aren't favorable based on ratio</p>
+                    </div>
+                </div>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+                    <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-shield"></i>
+                        </div>
+                        <div class="count">{{report.ratio}}%</div>
+
+                        <h3>Ratio </h3>
+                        <p>A percentage of user's response to be deemed positive</p>
+                    </div>
+                </div>
+            </div>
+            <!-- /top tiles -->
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 ">
+                    <div class="col-md-8 col-sm-8 ">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Quiz Responses Summary</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="card-box table-responsive">
+                                            <p class="text-muted font-13 m-b-30">
+                                                This table shows a summary of the Quiz - YearUp DS Program 2020
+                                            </p>
+                                            <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>Email</th>
+                                                    <th>City</th>
+                                                    <th>Date</th>
+                                                    <th>Accepted Responses?</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for response in report.response%}
+                                                <tr>
+                                                    <td><a class="email-modal" href="#" data-toggle="modal" data-target=".bs-example-modal-lg">{{response.email}}</a></td>
+                                                    <td>{{response.city}}</td>
+                                                    <td>{{response.date|date:"yyyy-dd-MM HH:mm"}}</td>
+                                                    <td>{% ifequal response.accepted "Yes" %}<span class="badge badge-success">{{response.accepted}}</span>
+                                                        {% else %}<span class="badge badge-danger">{{response.accepted}}</span>
+                                                        {% endifequal %}
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                            <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="myModalLabel">Response </h4>
+                                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <table id="datatable-buttons2" class="table table-striped table-bordered" style="width:100%">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>Question Order</th>
+                                                                    <th>Question</th>
+                                                                    <th>Option Selected</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody class="answer-data">
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 ">
+
+                        <div class="x_panel tile overflow_hidden">
+                            <div class="x_title">
+                                <h2>Setting - Ratio</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <p class="text-muted font-13 m-b-30">
+                                    Adjust system ratio
+                                </p>
+                                <form id="demo-form2" method="post" action="/" novalidate class="form-horizontal form-label-left">
+                                    {% csrf-field %}
+                                    {% if errors.message.ratio %}
+                                    <div class="text-danger">{{errors.message.ratio|join}}</div>
+                                    {% endif %}
+                                    <div class="item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="ratio-percent">Ratio %
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 ">
+                                            <input type="number" name="ratio" value="{{ratio}}" id="ratio-percent" placeholder="{{report.ratio}}" class="form-control" data-validate-minmax="1,100" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <div class="col-md-6 col-sm-6 offset-md-3">
+                                            <input type="submit" class="btn btn-success" value="Adjust">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                © 2020 YearUp
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- Scripts -->
+<script type="text/javascript">
+    var csrfToken = "{{csrf-token}}";
+</script>
+<!--{% script "/js/app.js" %}-->
+
+<!-- jQuery -->
+{% script "/vendors/jquery/dist/jquery.min.js" %}
+<!-- Bootstrap -->
+{% script "/vendors/bootstrap/dist/js/bootstrap.bundle.min.js" %}
+<!-- FastClick -->
+{% script "/vendors/fastclick/lib/fastclick.js" %}
+<!-- Chart.js -->
+{% script "/vendors/Chart.js/dist/Chart.min.js" %}
+<!-- iCheck -->
+{% script "/vendors/iCheck/icheck.min.js" %}
+<!-- Skycons -->
+{% script "/vendors/skycons/skycons.js" %}
+<!-- DateJS -->
+{% script "/vendors/DateJS/build/date.js" %}
+<!-- Parsley -->
+{% script "/vendors/parsleyjs/dist/parsley.min.js" %}
+<!-- Validator -->
+{% script "/vendors/validator/multifield.js" %}
+{% script "/vendors/validator/validator.js" %}
+
+<!-- Datatables -->
+{% script "/vendors/datatables.net/js/jquery.dataTables.min.js" %}
+{% script "/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js" %}
+{% script "/vendors/datatables.net-buttons/js/dataTables.buttons.min.js" %}
+{% script "/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js" %}
+{% script "/vendors/datatables.net-buttons/js/buttons.flash.min.js" %}
+{% script "/vendors/datatables.net-buttons/js/buttons.html5.min.js" %}
+{% script "/vendors/datatables.net-buttons/js/buttons.print.min.js" %}
+{% script "/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js" %}
+{% script "/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js" %}
+{% script "/vendors/datatables.net-responsive/js/dataTables.responsive.min.js" %}
+{% script "/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js" %}
+{% script "/vendors/datatables.net-scroller/js/dataTables.scroller.min.js" %}
+
+{% script "/vendors/jszip/dist/jszip.min.js" %}
+{% script "/vendors/pdfmake/build/pdfmake.min.js" %}
+{% script "/vendors/pdfmake/build/vfs_fonts.js" %}
+
+<!-- Custom Theme Scripts -->
+{% script "/build/js/custom.min.js" %}
+
+<script type="text/javascript">
+    $(".email-modal").click(function(e){
+        e.preventDefault();
+
+        var obj = $(this).text();
+
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/report/selection",
+            data: '{"quizId": 1, "email": "'+obj+'"}',
+            dataType: "json",
+            contentType: "application/json; charset=UTF-8",
+            headers: {'x-csrf-token': "{{csrf-token}}"},
+
+            success : function(result) {
+                // console.log(result.data);
+                $('.answer-data').html("");
+                $.each(result.data, function (i) {
+                    $('.answer-data').append(
+                        "<tr>"+
+                        "<td>"+result.data[i].id+"</td><td>"+result.data[i].question+"</td><td>"+result.data[i].option+"</td>"+
+                        "</tr>"
+                    )
+                })
+            },
+            error: function(xhr, resp, text) {
+                console.log(xhr, resp, text);
+            },
+            processData: false
+        });
+    })
+</script>
+
+</body>
+</html>
