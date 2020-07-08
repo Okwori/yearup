@@ -220,7 +220,7 @@
                                 <p class="text-muted font-13 m-b-30">
                                     Adjust system ratio
                                 </p>
-                                <form id="demo-form2" method="post" action="/" novalidate class="form-horizontal form-label-left">
+                                <form id="demo-form2" method="post" action="/admin" novalidate class="form-horizontal form-label-left">
                                     {% csrf-field %}
                                     {% if errors.message.ratio %}
                                     <div class="text-danger">{{errors.message.ratio|join}}</div>
