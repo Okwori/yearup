@@ -87,11 +87,13 @@
              [:footer#footer
               [:p.copyright "© 2020 YearUp"]]]
        [:div#bg {:style {:background-position "center" :background-size "cover" :background-repeat "no-repeat" :z-index "1"
-                         :background-image    (str "url('img/", (if (= order 13)
-                                                                  (do (when-let [city-id (get-in answer [:city-id])]
-                                                                        (let [city (filter #(= (:id %) city-id) cities)]
-                                                                          (:background-image (first city)))))
-                                                                  (:backgroundImage question)), "')")}}]])))
+                         :background-image
+                                                   (if (= order 13)
+                                                     (do (when-let [city-id (get-in answer [:city-id])]
+                                                           (let [city (filter #(= (:id %) city-id) cities)]
+                                                             (str "url('/api/v1/files/download/"
+                                                                  (:city-id (first city))"')"))))
+                                                     (str "url('img/" (:backgroundImage question) "')"))}}]])))
 
 (defn page []
   (if-let [page @(rf/subscribe [:common/page])]
