@@ -7,11 +7,13 @@
   "Get a city with address specified"
   [id]
   (let [city-query (db/get-city {:id id})
-        address-query (into [] (db/get-address-by-city-id {:city-id (:id city-query)}))]
+        ;address-query (into [] (db/get-address-by-city-id {:city-id (:id city-query)}))
+        ]
     {:id (:id city-query)
      :name (:name city-query)
      :background-image (:background_image city-query)
-     :addresses address-query
+     :question (:question city-query)
+     ;:addresses address-query
      :data (:data city-query)
      :content-type (:type city-query)}))
 
