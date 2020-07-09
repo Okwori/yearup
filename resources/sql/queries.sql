@@ -189,8 +189,9 @@ WHERE id = :id;
 -- :name create-city! :! :n
 -- :doc creates a new city record
 INSERT INTO city
-    (name)
-VALUES (:name);
+    (name, question, background_image, data, type)
+VALUES (:name, :city-question, :background_image, :data, :type);
+
 
 -- :name update-city! :! :n
 -- :doc updates an existing city record
@@ -312,3 +313,9 @@ SELECT *
 FROM answer
 WHERE user_id = :user-id;
 
+-- :name get-full-report :? :*
+SELECT quiz.desc quiz, u.email email, q.question question, o.name response, c.name city, a.date date
+FROM answer a inner join users u on a.user_id = u.id inner join city c on a.city_id = c.id
+inner join option o on a.option_id = o.id inner join question q on o.question_id = q.id
+inner join quiz on q.quiz_id = quiz.id
+WHERE quiz.status = 1;
