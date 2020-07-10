@@ -5,5 +5,5 @@
             [yearup.core :as rc]))
 
 (deftest test-home
-         (is (= true true)))
+  (is (= true true)))
 

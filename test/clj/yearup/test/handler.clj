@@ -1,5 +1,4 @@
 (ns yearup.test.handler
-  ;(:use midje.sweet)
   (:require
     [clojure.test :refer :all]
     [ring.mock.request :refer :all]
@@ -21,6 +20,7 @@
     (mount/start #'yearup.config/env
                  #'yearup.handler/app-routes)
     (f)))
+
 (deftest test-app
   (fact "main route"
         (let [response ((app) (request :get "/"))]
