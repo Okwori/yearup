@@ -3,9 +3,9 @@
 
 (def defaults
   {:init
-               (fn []
-                 (log/info "\n-=[yearup started successfully]=-"))
+   (fn []
+     (log/info "\n-=[yearup started successfully]=-"))
    :stop
-               (fn []
-                 (log/info "\n-=[yearup has shut down successfully]=-"))
+   (fn []
+     (log/info "\n-=[yearup has shut down successfully]=-"))
    :middleware identity})
