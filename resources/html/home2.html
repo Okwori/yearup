@@ -26,6 +26,11 @@
 
     <!-- Custom Theme Style -->
     <link href="/build/css/custom.min.css" rel="stylesheet">
+
+    <!-- Vega-Lite -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.12.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.13.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.8.0"></script>
 </head>
 
 <body class="nav-md">
@@ -238,6 +243,42 @@
                                         </div>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+
+                        <div class="x_panel tile overflow_hidden">
+                            <div class="x_title">
+                                <h2>Responses by city</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div id="city-pie-chart"></div>
+                                <script type="text/javascript">
+                                    var vlSpec = {
+                                        "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+                                        "description": "A simple pie chart showing quiz responses",
+                                        "data": {
+                                            "url": "/api/v1/report/response"
+                                        },
+                                        "mark": {"type": "arc", "tooltip": true},
+                                        "encoding": {
+                                            "theta": {
+                                                "type": "quantitative",
+                                                "aggregate": "count",
+                                                "title": "Responses"
+                                            },
+                                            "color": {"field": "city", "type": "nominal", "title": "City"}
+                                        },
+                                        "view": {"stroke": null}
+                                    };
+                                    vegaEmbed('#city-pie-chart', vlSpec);
+                                </script>
                             </div>
                         </div>
                     </div>
