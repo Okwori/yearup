@@ -12,7 +12,8 @@
     [yearup.middleware.exception :as exception]
     [ring.util.http-response :refer :all]
     [clojure.java.io :as io]
-    [yearup.db.queries :as db]))
+    [yearup.db.queries :as db])
+  (:import (java.io ByteArrayInputStream)))
 
 (defn service-routes []
   ["/api/v1"
@@ -69,12 +70,37 @@
                             :body   (db/get-questions quizId)})}}] ]
 
    ["/report"
-    {:post {:summary    "returns all the data needs for the dashboard"
-            :parameters nil
-            :responses  {200 {:body map?}}
-            :handler    (fn [{{{:keys []} :body} :parameters}]
-                          {:status 200
-                           :body   (db/report)})}}]
+    ["/"
+     {:post {:summary    "returns all the data needs for the dashboard"
+             :parameters nil
+             :responses  {200 {:body map?}}
+             :handler    (fn [{{{:keys []} :body} :parameters}]
+                           {:status 200
+                            :body   (db/report)})}}]
+
+    ["/selection"
+     {:post {:summary    "returns the answer for a particular user given the email and quiz id"
+             :parameters {:body {:quizId int? :email string?}}
+             :responses  {200 {:body {:data coll?}}}
+             :handler    (fn [{{{:keys [quizId email]} :body} :parameters}]
+                           {:status 200
+                            :body   (db/get-answer-by-user quizId email)})}}]
+
+    ["/response"
+     {:get {:summary    "returns all response data needs for the dashboard"
+             :parameters nil
+             :responses  {200 {:body coll?}}
+             :handler    (fn [{{{:keys []} :body} :parameters}]
+                           {:status 200
+                            :body   (:response (db/report))})}}]
+
+    ["/list"
+     {:get {:summary    "returns the full report of responses to the quiz"
+             :parameters nil
+             :responses  {200 {:body coll?}}
+             :handler    (fn [{{{:keys []} :body} :parameters}]
+                           {:status 200
+                            :body   (db/get-full-report)})}}]]
 
    ["/submit"
     {:post {:summary    "accepts a user and a collection options selected, returns message based on options"
@@ -103,11 +129,11 @@
 
     ["/list"
      {:get {:summary    "returns the quizzes specified in the system"
-             :parameters nil
-             :responses  {200 {:body {:data vector?}}}
-             :handler    (fn [{{{:keys []} :body} :parameters}]
-                           {:status 200
-                            :body   {:data (db/get-quiz)}})}}]]
+            :parameters nil
+            :responses  {200 {:body {:data vector?}}}
+            :handler    (fn [{{{:keys []} :body} :parameters}]
+                          {:status 200
+                           :body   {:data (db/get-quiz)}})}}]]
 
    ["/user"
     [""
@@ -140,13 +166,37 @@
                          {:status 200
                           :body   {:data {:video (db/get-video-url)}}})}}]
 
-   ["/cities"
-    {:get {:summary    "returns the list of cities on the YearUp programme"
-           :parameters nil
-           :responses  {200 {:body {:data {:cities vector?}}}}
-           :handler    (fn [{{{:keys []} :query} :parameters}]
-                         {:status 200
-                          :body   {:data {:cities (db/get-cities)}}})}}]
+   ["/city"
+    ["/list"
+     {:get {:summary    "returns the list of cities on the YearUp programme"
+            :parameters nil
+            :responses  {200 {:body {:data {:cities vector?}}}}
+            :handler    (fn [{{{:keys []} :query} :parameters}]
+                          {:status 200
+                           :body   {:data {:cities (db/get-cities)}}})}}]
+    ;["/create"
+    ; {:post {:summary    "create a new city record and returns 1"
+    ;         :parameters {:body {:name string?}}
+    ;         :responses  {200 {:body {:id int?}}}
+    ;         :handler    (fn [{{{:keys [name]} :body} :parameters}]
+    ;                       {:status 200
+    ;                        :body   (db/create-city name)})}}]
+    ]
+   ["/files"
+    {:swagger {:tags ["files"]}}
+
+    ["/download/:id"
+     {:get {:summary    "downloads a file"
+            :parameters {:path {:id int?}}
+            :swagger    {:produces ["image/png"]}
+            :handler    (fn [{{{:keys [id]} :path} :parameters}]
+                          (let [image-cities (db/get-city id)
+                                image (-> image-cities
+                                          :data
+                                          (ByteArrayInputStream.))]
+                            {:status  200
+                             :headers {"Content-Type" (:content-type image-cities)}
+                             :body    image}))}}]]
 
    ["/setting"
     {:get {:summary    "returns a particular setting with the name specified"
@@ -154,4 +204,13 @@
            :responses  {200 {:body {:data map?}}}
            :handler    (fn [{{{:keys [name]} :body} :parameters}]
                          {:status 200
-                          :body   {:data (db/get-setting name)}})}}]])
+                          :body   {:data (db/get-setting name)}})}}]
+
+   ["/update"
+    ["/ratio"
+     {:post {:summary    "adjust system ratio"
+            :parameters {:body {:r-ratio int?}}
+            :responses  {200 {:body {:data int?}}}
+            :handler    (fn [{{{:keys [r-ratio]} :body} :parameters}]
+                          {:status 200
+                           :body   {:data (db/update-ratio r-ratio)}})}}]]])
