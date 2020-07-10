@@ -1,4 +1,4 @@
-(defproject yearup "0.1.0-SNAPSHOT"
+(defproject yearup "0.1.0"
 
   :description "YearUp: 2020 DS Program"
   :url "http://yearup.herokuapp.com/"
