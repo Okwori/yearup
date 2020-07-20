@@ -163,7 +163,7 @@
                                                 <tr>
                                                     <td><a class="email-modal" href="#" data-toggle="modal" data-target=".bs-example-modal-lg">{{response.email}}</a></td>
                                                     <td>{{response.city}}</td>
-                                                    <td>{{response.date|date:"yyyy-dd-MM HH:mm"}}</td>
+                                                    <td>{{response.date|date:"yyyy-MM-dd HH:mm"}}</td>
                                                     <td>{% ifequal response.accepted "Yes" %}<span class="badge badge-success">{{response.accepted}}</span>
                                                         {% else %}<span class="badge badge-danger">{{response.accepted}}</span>
                                                         {% endifequal %}
