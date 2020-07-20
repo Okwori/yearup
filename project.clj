@@ -1,4 +1,4 @@
-(defproject yearup "0.1.0"
+(defproject yearup "0.2.0-SNAPSHOT"
 
   :description "YearUp: 2020 DS Program"
   :url "http://yearup.herokuapp.com/"
@@ -104,7 +104,7 @@
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.24.1"]
                                  [jonase/eastwood "0.3.5"]
                                  [lein-doo "0.1.11"]
-                                 [lein-figwheel "0.5.20"]] 
+                                 [lein-figwheel "0.5.20"]]
                   :cljsbuild{:builds
                    {:app
                     {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
@@ -119,8 +119,8 @@
                       :pretty-print true
                       :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
                       :preloads [re-frisk.preload]}}}}
-                  
-                  
+
+
                   :doo {:build "test"}
                   :source-paths ["env/dev/clj" ]
                   :resource-paths ["env/dev/resources"]
@@ -129,8 +129,8 @@
                   :injections [(require 'pjstadig.humane-test-output)
                                (pjstadig.humane-test-output/activate!)]}
    :project/test {:jvm-opts ["-Dconf=test-config.edn" ]
-                  :resource-paths ["env/test/resources"] 
-                  :cljsbuild 
+                  :resource-paths ["env/test/resources"]
+                  :cljsbuild
                   {:builds
                    {:test
                     {:source-paths ["src/cljc" "src/cljs" "test/cljs"]
@@ -139,7 +139,7 @@
                       :main "yearup.doo-runner"
                       :optimizations :whitespace
                       :pretty-print true}}}}
-                  
+
                   }
    :profiles/dev {}
    :profiles/test {}})
