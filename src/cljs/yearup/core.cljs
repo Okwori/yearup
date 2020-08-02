@@ -347,7 +347,7 @@
                    :on-click #(if (= (.-key %) "Enter")
                                 (if (not (s/valid? ::r-city (:r-city (string/trim @vals-city))))
                                   (do (rf/dispatch [:common/set-error "Enter a city name"]))
-                                  (do (rf/dispatch [:clear-exceptions]) (println @vals-city)
+                                  (do (rf/dispatch [:clear-exceptions])
                                       (rf/dispatch [:submit-city @vals-city]))))} "Submit"]]]]]])]]]
        [:br]]
       [:footer
