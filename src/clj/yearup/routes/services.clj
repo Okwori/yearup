@@ -50,9 +50,11 @@
              {:url    "/api/v1/swagger.json"
               :config {:validator-url nil}})}]
 
-    ["/graphql" {:post (fn [req] (ok (graphql/execute-request (-> req :body slurp))))}]]
+    ["/graphql" {:no-doc  true
+                 :post (fn [req] (ok (graphql/execute-request (-> req :body slurp))))}]]
 
    ["/question"
+    {:swagger {:tags ["question"]}}
     [""
      {:post {:summary    "return a question and its options"
              :parameters {:body {:quizId int? :questionId int?}}
@@ -70,6 +72,7 @@
                             :body   (db/get-questions quizId)})}}] ]
 
    ["/report"
+    {:swagger {:tags ["report"]}}
     ["/"
      {:post {:summary    "returns all the data needs for the dashboard"
              :parameters nil
@@ -103,7 +106,8 @@
                             :body   (db/get-full-report)})}}]]
 
    ["/submit"
-    {:post {:summary    "accepts a user and a collection options selected, returns message based on options"
+    {:no-doc  true
+     :post {:summary    "accepts a user and a collection options selected, returns message based on options"
             :parameters {:body {:userId int? :selections (vector? int?) :cityId int?}}
             :responses  {200 {:body map?}}
             :handler    (fn [{{{:keys [userId selections cityId]} :body} :parameters}]
@@ -119,6 +123,7 @@
                            :body   (db/get-options-question questionId)})}}]
 
    ["/quiz"
+    {:swagger {:tags ["quiz"]}}
     [""
      {:post {:summary    "returns the quiz specified by id in the system"
              :parameters {:body {:id int?}}
@@ -136,6 +141,7 @@
                            :body   {:data (db/get-quiz)}})}}]]
 
    ["/user"
+    {:swagger {:tags ["user"]}}
     [""
      {:get  {:summary    "returns the user with the specified email"
              :parameters {:query {:email string?}}
@@ -151,7 +157,8 @@
                            {:status 200
                             :body   {:data (db/get-user-by-id userId)}})}}]
     ["/create"
-     {:post {:summary    "create a user with the specified email"
+     {:no-doc  true
+      :post {:summary    "create a user with the specified email"
              :parameters {:body {:email string?}}
              :responses  {200 {:body {:id int?}}}
              :handler    (fn [{{{:keys [email]} :body} :parameters}]
